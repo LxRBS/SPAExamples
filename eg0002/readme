@@ -1,0 +1,12 @@
+一共2个源文件，一个头文件，分别是main.c、f.c和f.h。
+
+其中f文件用来声明和定义f函数，main文件用来调用f函数
+
+此时只对main.c执行gcc指令会报错
+
+此时需要依次执行如下2条指令：
+gcc -c f.c
+gcc f.o main.c -o main
+
+也可以只执行一条指令
+gcc f.c main.c -o main

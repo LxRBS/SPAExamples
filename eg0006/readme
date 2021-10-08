@@ -1,0 +1,4 @@
+使用gcc生成可调试的可执行文件
+
+gcc main.c -g -o main
+就是加一个-g选项

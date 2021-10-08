@@ -1,0 +1,8 @@
+gcc指令最简单的使用
+
+
+gcc main.c
+可以得到名为a.out的可执行文件
+
+gcc main.c -o main
+使用-o选项指定输出文件的名称
