@@ -30,9 +30,11 @@ public:  // 内部用的一些typedef
     /// BB到ID的映射的type
     typedef std::unordered_map<const BB*, SVF::NodeID> BBIDMapTy;  
     /// 变量到答案的映射的type
-    typedef std::unordered_map<const llvm::Value*, SignK> VariableAnsMapTy; 
-    /// 每个BB的答案的type
-    typedef std::unordered_map<const BB*, VariableAnsMapTy> BBAnsMapTy;
+    typedef std::unordered_map<const llvm::Value*, SignK> VariableAnsMapTy;
+    /// 保存数据流分析结果的数据结构 
+    typedef VariableAnsMapTy FlowAnalysisDataTy;
+    /// BB到答案的映射
+    typedef std::unordered_map<const BB*, FlowAnalysisDataTy> BBAnsMapTy;
     /// 保证元素唯一性的队列的type
     typedef SVF::FIFOWorkList<const BB*> WorkListTy;
 
@@ -56,42 +58,51 @@ private:
     void init();  // 初始化
     void proc();  // 分析    
 
-    void initBBs();    // 为所有的BB编号，初始化成员变量bb2id
-    void initValues(); // 获取所有的变量，初始化ans
+private: // 传递函数
+    /// 给定bb，计算out(BB)，即out = gen(BB)并上(in(BB)-Kill(BB))
+    /// 其中in等于bb所有前驱的out的合并
+    /// 如果计算结果与原来的bb2ans[bb]相比有变化则返回true
+    bool transfer(const BB *bb);
 
-private:
-    /// 把src的答案合并到tgt上，即 tgt |= src
-    /// 返回true表示tgt的答案有所变化，否则返回false
-    bool uniteTo(const BB *src, const BB *tgt);
+    /// 根据每条指令计算数据流分析的结果，inout既是输入参数也是输出结果
+    void transfer(const llvm::Instruction *inst, FlowAnalysisDataTy &inout);
 
-    /// 根据BB自身的指令计算答案，如果有所改变返回true
-    bool generate(const BB *bb);
-
-    /// 根据给定指令，更新相应的结果
-    bool generate(const llvm::Instruction *inst, VariableAnsMapTy &ans);
-
+private: // 每条指令的具体处理
     /// 处理store指令，格式为 store op0, op1
-    bool genStore(const llvm::Value *op0, const llvm::Value *op1, VariableAnsMapTy &ans);
+    void doStore(const llvm::StoreInst *inst, FlowAnalysisDataTy &inout);
 
     /// 处理load指令, user = load op0
-    bool genLoad(const llvm::User *user, const llvm::Value *op0, VariableAnsMapTy &ans);
+    void doLoad(const llvm::LoadInst *inst, FlowAnalysisDataTy &inout);
     
     /// 处理add指令, user = add op0, op1
-    bool genAdd(const llvm::User *user, const llvm::Value *op0, const llvm::Value *op1, VariableAnsMapTy &ans);
+    void doAdd(const llvm::BinaryOperator *inst, FlowAnalysisDataTy &inout);
 
     /// 处理sdiv指令, user = sdiv op0, op1
-    bool genSdiv(const llvm::User *user, const llvm::Value *op0, const llvm::Value *op1, VariableAnsMapTy &ans);
+    void doSDiv(const llvm::BinaryOperator *inst, FlowAnalysisDataTy &inout);
 
-    
+
+private: // 与数据结构有关的操作
+    /// 将src合并到tgt上
+    void merge(const FlowAnalysisDataTy &src, FlowAnalysisDataTy &tgt);
+
+    /// 判断src和tgt是否相等
+    bool equal(const FlowAnalysisDataTy &src, const FlowAnalysisDataTy &tgt);
+
+    /// 根据需要初始化流分析的数据结构d
+    void initialize(FlowAnalysisDataTy &d);
+
+private:    
     /// 获取指定变量的符号
-    SignK getSign(const llvm::Value *value, const VariableAnsMapTy &ans)const{
+    SignK getSign(const llvm::Value *value, const FlowAnalysisDataTy &ans)const{
         /// 暂时只处理整型数值
         if(auto c = llvm::dyn_cast<llvm::ConstantInt>(value)){  // 如果是常数
             int64_t cc = c->getSExtValue();  // 取出具体的数值
             return cc > 0 ? POS : (cc < 0 ? NEG : ZER);
         }
-        return ans.find(value)->second;
+        auto it = ans.find(value);
+        return it != ans.end() ? it->second : INI;
     }
+
     /// 合并答案
     static SignK unite(SignK a, SignK b){
         switch(a){
@@ -105,14 +116,16 @@ private:
     }
 
 private:
-    const SVF::SVFModule *module;  // SVF模块，外部给定
+    const SVF::SVFModule *module;      // SVF模块，外部给定
     const SVF::SymbolTableInfo *table; // 符号表， 外部给定 
     
-    BBIDMapTy bb2id;  // BB的编号，从1开始
-    BBAnsMapTy bb2ans;   // 每个BB的结果
+    BBIDMapTy bb2id;   // BB的编号，从1开始
+    BBAnsMapTy bb2ans; // 每个BB的结果
 
-    WorkListTy worklist; // 队列，暂时没用
+    const BB *start_point; // 数据流分析的起点，暂时没用
+    WorkListTy worklist;   // 队列，暂时没用
 
+    int iteration_count;
 private:
     const bool debug = false;
 };

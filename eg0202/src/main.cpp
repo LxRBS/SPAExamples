@@ -27,7 +27,7 @@ int main(int argc, char **argv){
     SVFModule* svfModule = LLVMModuleSet::getLLVMModuleSet()->buildSVFModule(vec);
     SymbolTableInfo *symbolTableInfo = SymbolTableInfo::Symbolnfo();
 
-    string signAnaName("./"+prefix+"/"+prefix+"_signanalysis.txt");
+    string signAnaName("./"+prefix+"/"+prefix+"_valuemaintiananalysis.txt");
     ofstream out(signAnaName);
     ValueMaintainAnalyzer analyzer(svfModule, symbolTableInfo);
     analyzer.report(out);

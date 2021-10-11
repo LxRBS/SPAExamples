@@ -6,7 +6,7 @@ if(DEFINED ENV{LLVM_DIR})
     set(CMAKE_CXX_STANDARD 14)
 endif()
 
-set(CMAKE_CXX_FLAGS "-fPIC -std=gnu++14 -O3 -fno-rtti -Wno-deprecated")
+set(CMAKE_CXX_FLAGS "-fPIC -std=gnu++14 -O3 -fno-rtti -Wno-deprecated -g")
 set(CMAKE_C_FLAGS "-fPIC")
 
 # 这两行是关键，一行指定外部库，一行指定include文件

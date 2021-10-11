@@ -4,13 +4,13 @@ void f(){
     y = q + 2;
 L:
     m = k;
-    y = q - 1;
+    y = q + 1;
     if(x<y){
         x = 4;
         z = 5;
         if(p<q) goto L;
     }else{
-        x = m - 3;
+        x = m + 3;
     }
     z = p + p;
 }

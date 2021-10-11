@@ -9,6 +9,8 @@ endif()
 set(CMAKE_CXX_FLAGS "-fPIC -std=gnu++14 -O3 -fno-rtti -Wno-deprecated")
 set(CMAKE_C_FLAGS "-fPIC")
 
+set(CMAKE_BUILD_TYPE "Debug")
+
 # 这两行是关键，一行指定外部库，一行指定include文件
 find_package(LLVM REQUIRED CONFIG)        
 include_directories(SYSTEM ${LLVM_INCLUDE_DIRS})
