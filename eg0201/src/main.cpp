@@ -25,7 +25,7 @@ int main(int argc, char **argv){
     /// SVF可以将多个bc文件生成SVF模块，这里只写一个bc文件
     vector<string> vec(1, fullName);
     SVFModule* svfModule = LLVMModuleSet::getLLVMModuleSet()->buildSVFModule(vec);
-    SymbolTableInfo *symbolTableInfo = SymbolTableInfo::Symbolnfo();
+    SymbolTableInfo *symbolTableInfo = SymbolTableInfo::SymbolInfo();
 
     string signAnaName("./"+prefix+"/"+prefix+"_signanalysis.txt");
     ofstream out(signAnaName);

@@ -21,7 +21,6 @@
 
 
 class ValueMaintainAnalyzer{
-public:
 
 public:  // 内部用的一些typedef
     typedef llvm::BasicBlock BB;
