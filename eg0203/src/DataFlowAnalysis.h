@@ -25,14 +25,27 @@ public: // 内部用的一些typedef
 
 public:
     /// 构造函数，给定SVF模块
-    DataFlowAnalysis(const SVF::SVFModule *pt, const SVF::SymbolTableInfo *p2):module(pt), table(p2){
+    DataFlowAnalysis(const SVF::SVFModule *pt, const SVF::SymbolTableInfo *p2):module(pt), table(p2){}    
+
+    /// 分析函数，因为里面有纯虚函数，因此不能放在构造函数中调用，只好再添加一个函数。
+    void analyze(){
         this->init();
         this->proc();
-    }    
+    }
 
-protected: // 需要子类继承的纯虚函数
+public: // 需要子类继承的纯虚函数
     /// 指定输出流输出分析结果
     virtual void report(std::ostream&os)const = 0;
+
+
+protected: // 需要子类继承的纯虚函数
+    virtual void merge(const FlowAnalysisDataTy &src, FlowAnalysisDataTy &tgt)=0;
+
+    /// 判断src和tgt是否相等
+    virtual bool equal(const FlowAnalysisDataTy &src, const FlowAnalysisDataTy &tgt)const=0;
+
+    /// 根据需要初始化流分析的数据结构d
+    virtual void initialize(FlowAnalysisDataTy &d)=0;    
 
 protected: // 子类可以实现也可以直接继承的
     virtual void init(){
@@ -53,20 +66,6 @@ protected: // 子类可以实现也可以直接继承的
         for(auto &pp: this->bb2id){
             this->bb2ans.insert({pp.first, ret}); // 注意C++的语义本身就是深拷贝，在Java或者python中要写成ret.copy()
         }          
-    }
-
-    virtual void merge(const FlowAnalysisDataTy &src, FlowAnalysisDataTy &tgt){
-        tgt.merge(src);
-    }
-
-    /// 判断src和tgt是否相等
-    virtual bool equal(const FlowAnalysisDataTy &src, const FlowAnalysisDataTy &tgt)const{
-        return src.equal(tgt);
-    }
-
-    /// 根据需要初始化流分析的数据结构d
-    virtual void initialize(FlowAnalysisDataTy &d){
-        d.init();
     }
 
 protected: // 具体的指令处理函数，子类如果不实现则直接继承，效果相当于忽略该条指令
