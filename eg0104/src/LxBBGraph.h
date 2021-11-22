@@ -55,7 +55,7 @@ public:
      * 将图的内容写到指定文件
      * @param name: 文件名
     */
-    void dump(std::string name){
+    void dump(std::string &name){
         GraphPrinter::WriteGraphToFile(SVFUtil::outs(), name, this);
     }
 
