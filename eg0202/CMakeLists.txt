@@ -9,8 +9,6 @@ endif()
 set(CMAKE_CXX_FLAGS "-fPIC -std=gnu++14 -O3 -fno-rtti -Wno-deprecated")
 set(CMAKE_C_FLAGS "-fPIC")
 
-set(CMAKE_BUILD_TYPE "Debug")
-
 # 这两行是关键，一行指定外部库，一行指定include文件
 find_package(LLVM REQUIRED CONFIG)        
 include_directories(SYSTEM ${LLVM_INCLUDE_DIRS})
@@ -19,9 +17,9 @@ include_directories(SYSTEM ${LLVM_INCLUDE_DIRS})
 llvm_map_components_to_libnames(llvm_libs BitWriter Core IPO IrReader InstCombine Instrumentation Target Linker Analysis ScalarOpts Support TransformUtils)
 
 # 这两行用SVF
-# 这一行指定SVF的库
-set(svf_lib "/media/COD/SVFProject/SVF-master/Release-build/lib/libSvf.a" "/media/COD/SVFProject/SVF-master/Release-build/lib/CUDD/libCudd.a")
-include_directories(SYSTEM "/media/COD/SVFProject/SVF-master/include")
+# 这一行指定SVF的库, 其实这个例子用不到SVF库
+# set(svf_lib "/home/luoxun/COD/SVFProject/SVF/Debug-build/lib/libSvf.a")
+# include_directories(SYSTEM "/home/luoxun/COD/SVFProject/SVF/include")
 
 # 这一行指定要去构建src
 add_subdirectory(src bin)

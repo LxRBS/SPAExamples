@@ -1,15 +1,20 @@
-数据流分析之保值分析
+正确引用LLVM外部库
 
-分析对象: eg0202_1.c
+正确配置好CMakeLists.txt内容
 
-首先在build目录执行
+在build目录下依次执行
 cmake ..
 make
 
-然后把分析对象拷贝到build目录
-然后执行
-lxllvm eg0202_1.c
-./bin/main eg0202_1
 
+然后将
+将eg0101的if.c和for.c拷贝到build目录
+依次执行
+lxllvm if.c
+lxllvm for.c
 
+再执行
+./bin/main if
+./bin/main for
 
+即可观察到if.ll和for.ll中关于模块、函数和BB的内容。

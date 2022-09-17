@@ -1,7 +1,7 @@
 void f(){
-    int x = -1, y = 0, z = 100;
-    while(y<z){
-        x = x / -1;
-        y = y + 1;
+    int i=0, a=1;
+    for(i=0;i<3;i++){
+        a = a * 10;
     }
+    a = a * i;
 }
