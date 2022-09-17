@@ -17,9 +17,9 @@ include_directories(SYSTEM ${LLVM_INCLUDE_DIRS})
 llvm_map_components_to_libnames(llvm_libs BitWriter Core IPO IrReader InstCombine Instrumentation Target Linker Analysis ScalarOpts Support TransformUtils)
 
 # 这两行用SVF
-# 这一行指定SVF的库
-set(svf_lib "/media/COD/SVFProject/SVF-master/Debug-build/lib/libSvf.a")
-include_directories(SYSTEM "/media/COD/SVFProject/SVF-master/include")
+# 这一行指定SVF的库, 其实这个例子用不到SVF库
+# set(svf_lib "/home/luoxun/COD/SVFProject/SVF/Debug-build/lib/libSvf.a")
+# include_directories(SYSTEM "/home/luoxun/COD/SVFProject/SVF/include")
 
 # 这一行指定要去构建src
 add_subdirectory(src bin)
