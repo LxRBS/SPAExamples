@@ -1,8 +1,0 @@
-正确引用SVF库，实际上也需要LLVM的内容
-
-在build目录下执行
-cmake ..
-make
-./bin/main
-
-在build目录下得到一个dot文件，内容一个有向图，并且对该图求SCC，并输出到屏幕
