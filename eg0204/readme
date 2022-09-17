@@ -1,0 +1,18 @@
+使用SVF的图类，再通过SVF调用LLVM相关内容，生成自己的BB流程图
+该例子包括
+main.cpp
+LxBBGraph.h
+lxmsc.h
+
+在build目录下执行
+cmake ..
+make
+
+再编辑好if.c和for.c内容，并且得到相应的目录，执行以下指令
+./bin/main if
+./bin/main for
+
+可以得到相应的结果
+
+make时常见错误：
+显示找不到SVFUtil::outs()，这是因为没有include Util/SVFUtil.h
