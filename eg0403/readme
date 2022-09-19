@@ -1,0 +1,19 @@
+生成SVFG
+该例子包括
+main.cpp
+
+在build目录下执行
+cmake ..
+make
+
+再编辑好相应的例程, 执行指令即可
+例如例程
+eg0401_1.c
+执行完shell指令以后得到eg0401目录
+
+执行
+./build/bin/main eg0401
+
+可以得到相应的结果
+
+
