@@ -11,8 +11,8 @@ make
 eg0401_1.c
 执行完shell指令以后得到eg0401目录
 
-执行
-./build/bin/main eg0401
+进入eg目录执行
+../build/bin/main eg0401
 
 可以得到相应的结果
 
