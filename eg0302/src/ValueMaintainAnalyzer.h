@@ -12,7 +12,7 @@
 
 #include <bits/stdc++.h>
 
-#include "SVF-FE/SymbolTableInfo.h"
+#include "MemoryModel/SymbolTableInfo.h"
 #include "Util/SVFBasicTypes.h"
 #include "Util/SVFModule.h"
 #include "Util/WorkList.h"

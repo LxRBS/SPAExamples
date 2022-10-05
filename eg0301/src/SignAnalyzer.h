@@ -10,7 +10,7 @@
 #define _SIGN_ANALYZER_H_
 
 #include <bits/stdc++.h>
-#include "SVF-FE/SymbolTableInfo.h"
+#include "MemoryModel/SymbolTableInfo.h"
 #include "Util/SVFModule.h"
 #include "Util/WorkList.h"
 

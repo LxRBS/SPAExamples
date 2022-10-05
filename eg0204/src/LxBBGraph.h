@@ -73,7 +73,7 @@ public:
 		/// 找出所有的BB，并按照名字编号，BB的名字应该是唯一的？
 		std::map<string, int> name2Idx;
 		int k = 1;
-		for(auto &fun: fanwei(module->llvmFunBegin(), module->llvmFunEnd())){
+		for(auto &fun: llvm::make_range(module->llvmFunBegin(), module->llvmFunEnd())){
 			auto &s1 = fun->getBasicBlockList();			
 			for(auto &bb: s1){				
 				name2Idx.insert(mp((string)bb.getName(), k));
@@ -83,7 +83,7 @@ public:
 			}
 		}
         /// 找出所有的边
-		for(auto &fun: fanwei(module->llvmFunBegin(), module->llvmFunEnd())){
+		for(auto &fun: llvm::make_range(module->llvmFunBegin(), module->llvmFunEnd())){
 			auto &s1 = fun->getBasicBlockList();
 			for(auto &bb: s1){
 				llvm::BasicBlock *pBB = &bb;
