@@ -8,11 +8,11 @@ make
 
 再编辑好相应的例程, 执行指令即可
 例如例程
-eg0401_1.c
-执行完shell指令以后得到eg0401目录
+eg0402_1.c
+执行完shell指令以后得到eg0402_1目录
 
 执行
-./build/bin/main eg0401
+./build/bin/main eg0402_1
 
 可以得到相应的结果
 

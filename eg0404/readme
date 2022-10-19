@@ -1,0 +1,27 @@
+使用命令行参数进行SVF相关操作
+该例子包括
+main.cpp
+
+在build目录下执行
+cmake ..
+make
+
+再编辑好相应的例程, 执行指令即可
+例如例程
+eg0404_1.c
+执行完shell指令以后得到eg0404_1目录
+
+进入eg目录执行
+../build/bin/main eg0404_1/eg0404_1.ll 参数列表
+
+可以得到相应的结果
+
+具体可用的参数可以使用
+../build/bin/main -help
+获取
+
+简单参数列表
+-dump-vfg: 生成vfg文件
+-stat=false: 不向屏幕输出SVF过程中的统计信息
+
+
