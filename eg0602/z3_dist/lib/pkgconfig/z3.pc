@@ -1,0 +1,13 @@
+prefix=/home/tornado/workspace/sa/zhoumin/saga/z3_dist
+exec_prefix=/home/tornado/workspace/sa/zhoumin/saga/z3_dist
+libdir=${exec_prefix}/lib
+sharedlibdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: z3
+Description: The Z3 Theorem Prover
+Version: 4.8.10.0
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz3
+Cflags: -I${includedir}
