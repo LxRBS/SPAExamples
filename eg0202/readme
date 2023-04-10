@@ -1,4 +1,4 @@
-正确引用LLVM外部库
+正确引用LLVM外部库，此例中LLVM版本无所谓
 
 正确配置好CMakeLists.txt内容
 
@@ -8,7 +8,7 @@ make
 
 
 然后将
-将eg0101的if.c和for.c拷贝到build目录
+将eg0201的if.c和for.c拷贝到build目录
 依次执行
 lxllvm if.c
 lxllvm for.c

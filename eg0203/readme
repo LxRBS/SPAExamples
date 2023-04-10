@@ -1,4 +1,5 @@
 正确引用SVF库，实际上也需要LLVM的内容
+SVF版本2.4或以下，LLVM大版本号为13。
 
 在build目录下执行
 cmake ..

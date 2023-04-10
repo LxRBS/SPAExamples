@@ -1,0 +1,17 @@
+使用LLVM支配树算法，观察一个函数内由BasicBlock构成的有向图。LLVM版本应该无所谓。
+
+该例子包括
+
+main.cpp
+
+在build目录下执行
+cmake ..
+make
+
+将sample/目录下的c文件拷贝到build目录，并且执行
+lxllvm x.c
+
+得到相应的目录，执行以下指令
+./bin/main x
+
+注意x.c内必须包含名为`f`的函数。

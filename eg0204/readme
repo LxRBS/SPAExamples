@@ -1,4 +1,5 @@
 使用SVF的图类，再通过SVF调用LLVM相关内容，生成自己的BB流程图
+SVF版本2.4或以下，LLVM大版本号为13。
 该例子包括
 main.cpp
 LxBBGraph.h
@@ -8,7 +9,12 @@ lxmsc.h
 cmake ..
 make
 
-再编辑好if.c和for.c内容，并且得到相应的目录，执行以下指令
+将sample/目录下的for.c和if.c拷贝到build/目录下
+依次执行
+lxllvm if.c
+lxllvm for.c
+
+得到相应的目录，执行以下指令
 ./bin/main if
 ./bin/main for
 
