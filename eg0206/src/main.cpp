@@ -47,6 +47,25 @@ void testDomTree(const SVFModule * module, string const & prefix, const SVFFunct
     LxBBGraph * tg = LxBBGraph::newInstance(dt, g);
     tg->dump(path+prefix+"_dt");
 
+    /// 生成并显示支配边界
+    DominanceFrontier df;
+    df.analyze(dt);
+
+    /// 打印支配边界
+    df.print(llvm::outs());
+
+    std::map<const llvm::BasicBlock *, int> mm;
+    for(const auto & p : llvm::make_range(g->begin(), g->end())) mm.insert({p.second->getBB(), p.first});
+
+    for(const auto & p : llvm::make_range(df.begin(), df.end())){
+        auto bb = p.first;
+        fprintf(stdout, "BB %d:", mm.find(bb)->second);
+        for(const auto & b : p.second){
+            fprintf(stdout, "%5d", mm.find(b)->second);
+        }
+        fprintf(stdout, "\n");
+    }
+
     delete g;
     delete tg;
 }
