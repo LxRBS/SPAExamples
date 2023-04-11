@@ -15,7 +15,8 @@ void demorgan() {
     s.add(conjecture); // 将约束加入求解器
  
     // check检查是否有解，结果是sat，但这个结果实际上并不能证明Demorgan定理
-    // 应该是check(!conjecture)结果是unsat，才能证明Demorgan定理
+    // 应该是check(非Demorgan)结果是sat，才能证明Demorgan定理
+    // 这个与全称量词有关
     switch (s.check()) {
     case unsat:   std::cout << "de-Morgan is not valid\n"; break;
     case sat:     std::cout << "de-Morgan is valid\n"; break;
