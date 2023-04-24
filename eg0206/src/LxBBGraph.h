@@ -150,6 +150,56 @@ public:
 		return g;
 	}
 
+    /**
+     * @brief 给定逆支配树，生成图，应该使用模板片特化解决。语法上比较麻烦，直接写了两个函数。
+     * 
+     * @param dt 支配树
+	 * @param origin 原图，主要是为了提供统一的BB编号
+     * @return LxBBGraph* 
+     */
+    static LxBBGraph * newInstance(const PostDominatorTree & dt, const LxBBGraph * origin = nullptr){
+		using BB = llvm::BasicBlock;
+		std::map<const BB *, int> mm;
+		if(origin)for(const auto & p : llvm::make_range(origin->begin(), origin->end())){
+			mm.insert({p.second->getBB(), p.first});
+		}
+
+        LxBBGraph * g = new LxBBGraph;
+        int toUsed = mm.size() + 1;
+
+		auto getId = [&toUsed, &mm](const BB * b){
+			auto it = mm.find(b);
+			if(it == mm.end()) return toUsed++;
+			return it->second;
+		};
+
+		using T = std::pair<const llvm::DomTreeNodeBase<BB>*, LxBBNode*>;
+        std::queue<T> q;
+        auto root = dt.getRootNode();
+		auto rootNode = new LxBBNode(getId(dt.getRoot()), dt.getRoot());
+		g->addGNode(rootNode->getId(), rootNode);
+		q.push(std::make_pair(root, rootNode));
+
+		while(1){
+            auto sz = q.size();
+			if(0 == sz) break;
+			while(sz--){
+                auto h = q.front(); q.pop();
+				
+				auto graph_node = h.second;
+				auto tree_node = h.first;
+				for(auto son : llvm::make_range(tree_node->begin(), tree_node->end())){
+					auto node = new LxBBNode(getId(son->getBlock()), son->getBlock());
+					auto edge = new LxBBEdge(graph_node, node);
+					g->addGNode(node->getId(), node);
+					g->addEdge(graph_node, node, edge);
+					q.push({son, node});
+				}
+			}
+		}
+		return g;
+	}	
+
 private:
     LxBBGraph():GenericGraph(){}
 };

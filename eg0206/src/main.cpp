@@ -52,11 +52,13 @@ void testDomTree(const SVFModule * module, string const & prefix, const SVFFunct
     df.analyze(dt);
 
     /// 打印支配边界
+    llvm::outs() << "dt df: \n";
     df.print(llvm::outs());
 
     std::map<const llvm::BasicBlock *, int> mm;
     for(const auto & p : llvm::make_range(g->begin(), g->end())) mm.insert({p.second->getBB(), p.first});
 
+    fprintf(stdout, "dt df with ID: \n");
     for(const auto & p : llvm::make_range(df.begin(), df.end())){
         auto bb = p.first;
         fprintf(stdout, "BB %d:", mm.find(bb)->second);
@@ -66,8 +68,21 @@ void testDomTree(const SVFModule * module, string const & prefix, const SVFFunct
         fprintf(stdout, "\n");
     }
 
+    /// 生成逆支配树
+    PostDominatorTree pdt;
+    pdt.recalculate(*f->getLLVMFun()); 
+    
+    llvm::outs() << "pdt df: \n";
+    pdt.print(llvm::outs());    
+    
+    LxBBGraph * ptg = LxBBGraph::newInstance(pdt, g);
+    ptg->dump(path+prefix+"_pdt");
+
+
+
     delete g;
     delete tg;
+    delete ptg;
 }
 
 /**

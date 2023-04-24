@@ -1,5 +1,7 @@
 使用SVF的图类，再通过SVF调用LLVM相关内容，生成自己的BB流程图
 SVF版本2.4或以下，LLVM大版本号为13。
+需要首先编译SVF，然后设置环境变量，并且正确引用libSVF.a
+
 该例子包括
 main.cpp
 LxBBGraph.h

@@ -1,4 +1,4 @@
-正确引用LLVM外部库，此例中LLVM版本无所谓
+正确引用LLVM外部库，此例中LLVM版本无所谓，但是用来编译c文件的llvm指令与LLVM外部库的版本必须匹配。
 
 正确配置好CMakeLists.txt内容
 

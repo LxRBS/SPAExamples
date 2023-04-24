@@ -19,7 +19,7 @@ llvm_map_components_to_libnames(llvm_libs BitWriter Core IPO IrReader InstCombin
 
 # 这两行用SVF
 # 这一行指定SVF的库
-set(svf_lib "$ENV{SVF_DIR}/Debug-build/lib/libSvf.a")
+set(svf_lib "$ENV{SVF_DIR}/Release-build/lib/libSvf.a")
 include_directories(SYSTEM "$ENV{SVF_DIR}/include")
 
 # 这一行指定要去构建src

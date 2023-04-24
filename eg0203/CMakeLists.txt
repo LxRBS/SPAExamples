@@ -17,8 +17,8 @@ include_directories(SYSTEM ${LLVM_INCLUDE_DIRS})
 llvm_map_components_to_libnames(llvm_libs BitWriter Core IPO IrReader InstCombine Instrumentation Target Linker Analysis ScalarOpts Support TransformUtils)
 
 # 这两行用SVF
-# 这一行指定SVF的库
-set(svf_lib "$ENV{SVF_DIR}/Debug-build/lib/libSvf.a")
+# 这一行指定SVF的库，需要与当前机器中的SVF路径匹配
+set(svf_lib "$ENV{SVF_DIR}/Release-build/lib/libSvf.a")
 include_directories(SYSTEM "$ENV{SVF_DIR}/include")
 
 # 这一行指定要去构建src

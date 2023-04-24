@@ -4,6 +4,8 @@
 
 此时只对main.c执行gcc指令会报错
 
+进入当前目录
+
 此时需要依次执行如下2条指令：
 gcc -c f.c
 gcc f.o main.c -o main
