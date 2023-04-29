@@ -25,6 +25,32 @@ if [ "$extension" != "ll" ]; then
     exit 1
 fi
 
+# 获取LLVM版本
+full_version=$(llvm-as --version | grep "LLVM version")
+if [ -z "${full_version}" ]; then
+    echo "LLVM version does NOT exist, ERROR!"
+    exit 1
+fi
+
+real_version="${full_version##* }"
+if [ -z "${real_version}" ]; then
+    echo "LLVM version number cant be get from $full_version, ERROR!"
+    exit 1
+fi
+
+real_version_number="${real_version%%.*}"  # 从左往右截取第一个'.'，右边的内容舍去，左边的内容保留
+if [ -z "${real_version_number}" ]; then
+    echo "LLVM major version number cant be get from $real_version, ERROR!"
+    exit 1
+fi
+
+echo try dots with LLVM "$real_version_number" "..."
+
+if [ $real_version_number -ge 13 ]; then
+    echo "The shell only works well with the version not exceed 11."
+    exit 1
+fi
+
 # 生成cfg的dot文件，每个函数一个
 opt -dot-cfg "$full_filename" > /dev/null
 
